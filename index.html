@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!-- Using code by Victor Powell (@vicapow) at:
+     http://setosa.io/blog/2014/07/26/markov-chains/index.html -->
+<html>
+  <head>
+    <title>Noel's Markov Chain</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href="style.css" type="text/css" rel="stylesheet">
+    <script src="d3.v3.js" charset="utf-8"></script>
+    <script src="vector.js"></script>
+    <script src="angular.min.js" charset="utf-8"></script>
+    <style>
+body {
+  background-color: #222;
+  color: white;
+}
+.controls {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+.st-diagram {
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+}
+.st-diagram .nodes {
+  pointer-events: all;
+}
+.matrixInput {
+  display: block;
+  height: 100%;
+  width: 40%;
+  right: 0;
+  position: absolute;
+}
+.matrixInput textarea{
+  border: none;
+  background-color: transparent;
+  color: red;
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+  outline: none;
+}
+.matrixInput textarea.valid {
+  color: white;
+}
+.matrix table {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  table-layout: fixed;
+}
+.matrix table td {
+  width: 33.33%;
+}
+.matrix table td input {
+  pointer-events: all;
+  width: 80%;
+}
+</style>
+</head>
+<body ng-app="myApp" ng-controller="MainCtrl">
+  <st-diagram center="diagramCenter" states="states"
+    transition-matrix="transitionMatrix" duration="duration"
+    selected-transition="selectedTransition"></st-diagram>
+  </div>
+  <!--
+  <div class="matrixInput">
+    <textarea ng-class="{ 'valid' : validTransitionMatrix }"
+      ng-model="transitionMatrixJSON">{{transitionMatrix | json}}</textarea>
+  </div>
+  <div class="controls">
+    <input class="speedRange" type="range" ng-model="speedRange"
+      min="1" max="20" step="1">
+    <label> speed </label>
+  </div>
+  -->
+</body>
+<script>
+
+var myApp = angular.module('myApp', []);
+
+myApp.controller('MainCtrl', function($scope, utils, $window) {
+  angular.element($window).on('resize', function() { $scope.$apply(); });
+  $scope.diagramCenter = [0.5, 0.5];
+  $scope.isSelectedTransition = function(i, j) {
+    return !!$scope.selectedTransition;
+    if (!$scope.selectedTransition) return false;
+    return $scope.selectedTransition[0] === i
+      && $scope.selectedTransition[1] === j;
+  };
+  
+  //$scope.speedRange = 2;
+  //$scope.$watch('speedRange', function(speed) {
+  //  $scope.duration = 2000 / +speed;
+  //});
+
+  $scope.duration = 2000 / 3;
+  
+  var states = ['ON FOOT',
+								'WALKING',
+								'STILL',
+								'UNKNOWN',
+								'EXITING VEHICLE',
+								'RUNNING',
+								'IN VEHICLE',
+								'ON BICYCLE'];
+
+  $scope.updateTransitionMatrix = function(matrix) {
+    var prev = $scope.transitionMatrix;
+    $scope.transitionMatrix = matrix;
+    if(!$scope.states || matrix.length !== prev.length) {
+      $scope.states = matrix.map(function(d, i) {
+        return { label: states[i], index: i };
+      });
+    }
+    utils.setHash({ tm: matrix });
+  };
+
+  var hash = utils.getHash();
+  if(hash && hash.tm) $scope.updateTransitionMatrix(hash.tm);
+  else $scope.updateTransitionMatrix([
+	[0.373, 0.0, 0.426, 0.105, 0.007, 0.0, 0.06, 0.029],
+	[0.0, 0.341, 0.343, 0.242, 0.016, 0.001, 0.029, 0.029],
+	[0.012, 0.025, 0.798, 0.127, 0.001, 0.0, 0.026, 0.011],
+	[0.013, 0.075, 0.515, 0.322, 0.004, 0.0, 0.042, 0.029],
+	[0.243, 0.481, 0.067, 0.147, 0.0, 0.0, 0.043, 0.019],
+	[0.0, 0.227, 0.045, 0.273, 0.045, 0.091, 0.136, 0.182],
+	[0.026, 0.03, 0.355, 0.127, 0.015, 0.0, 0.393, 0.053],
+	[0.015, 0.042, 0.14, 0.102, 0.003, 0.0, 0.058, 0.639]
+  ]);
+
+  $scope.transitionMatrixJSON = JSON.stringify($scope.transitionMatrix)
+    .replace(/\],/gm, '],\n');
+  $scope.$watch('transitionMatrixJSON', function(str) {
+    var valid = false;
+    try{ 
+      var matrix = JSON.parse(str);
+      valid = matrix[0].length === matrix.length;
+      var sum = matrix.reduce(function(c, row) {
+        return c + row.reduce(function(p, c){ return p + c; }, 0);
+      }, 0);
+      var r = sum / matrix.length;
+      valid = valid && r < (1 + 1e-9) && r > (1 - 1e-9);
+      if (valid) {
+        $scope.updateTransitionMatrix(matrix);
+      }
+    }catch(e) {}
+    $scope.validTransitionMatrix = valid;
+  });
+});
+</script>
+<script src="common.js" charset="utf-8"></script>
+</html>
+
