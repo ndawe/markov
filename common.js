@@ -181,7 +181,7 @@ myApp.directive('stDiagram', function($compile) {
       var _r = r;
       links
         .style('stroke-width', function(d) {
-          return Math.sqrt(100 * d.value || 2); })
+          return Math.sqrt(300 * d.value || 2); })
         .attr('d', function(d) {
           var r = _r;
           var p1 = vector(d.source.x, d.source.y);
@@ -195,11 +195,11 @@ myApp.directive('stDiagram', function($compile) {
             u = p2.sub(m);
             l = u.len();
             u = u.unit();
-            p2 = m.add(u.scale(l - r));
+            p2 = m.add(u.scale(l - r / 1.5));
             u = p1.sub(m);
             l = u.len();
             u = u.unit();
-            p1 = m.add(u.scale(l - r));
+            p1 = m.add(u.scale(l - r / 1.5));
             return 'M' + p1.array() + 'S' + m.array() + ' ' + p2.array();
           }else{
             var s = 50, rot = Math.PI / 8;
