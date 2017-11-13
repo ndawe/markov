@@ -1,7 +1,7 @@
 # Markov Me
 
-My state space and transition matrix according to an analysis of 3 years of my
-Google location and activity data.
+My state space and transition probabilities according to an analysis of 3 years
+of my Google location and activity data.
 
 ![](demo.png)
 
