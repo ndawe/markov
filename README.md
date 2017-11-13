@@ -11,7 +11,7 @@ View the live demo: [ndawe.github.io/markov](https://ndawe.github.io/markov)
 I selected the activity assigned the highest confidence for each event before
 histogramming all state transitions within 5 minute intervals. Multiple
 candidate activities often have confidence values that are very close. For
-example, I see that Google easily confuses riding a bike with being in a
+example, I see that riding a bike is easily confused with being in a
 vehicle (must be my smooth pedal stroke ;)).
 
 ![](demo.png)
