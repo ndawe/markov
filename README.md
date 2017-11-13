@@ -18,4 +18,4 @@ vehicle (must be my smooth pedal stroke ;)).
 
 Disclaimer: I don't actually satisfy the Markov property.
 
-Visualization code written by [Setosa.io](http://setosa.io)
+Visualization created by adapting code written by [Setosa.io](http://setosa.io)
