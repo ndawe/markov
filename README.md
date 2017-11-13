@@ -1,7 +1,7 @@
 # Markov Noel
 
 My state space and transition matrix according to an analysis of 3 years of my
-Google location/activity data.
+Google location and activity data.
 
 ![](demo.png)
 
