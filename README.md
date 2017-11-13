@@ -5,4 +5,4 @@ Google location and activity data.
 
 ![](demo.png)
 
-Visualization code created by [Setosa.io](http://setosa.io)
+Visualization code written by [Setosa.io](http://setosa.io)
