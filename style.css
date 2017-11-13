@@ -2,10 +2,13 @@ html, body{
   width: 100%;
   height: 100%;
   margin: auto;
-  /*background-color: black;*/
   color: #333;
   font-family: 'Open Sans', sans-serif;
   overflow: hidden;
+}
+body {
+  background-color: #fff;
+  color: white;
 }
 .main {
   margin: auto;
@@ -20,6 +23,13 @@ a {
   display: block;
   float: left;
   box-sizing: border-box;
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  z-index: 1;
+}
+.st-diagram .nodes {
+  pointer-events: all;
 }
 .node {
   stroke: #fff;
@@ -28,7 +38,7 @@ a {
 }
 .currentState {
   fill: rgba(0, 0, 0, 0.4);
-  stroke: #ffffff;
+  stroke: none;
   pointer-events: none;
 }
 .node text{
@@ -90,3 +100,35 @@ pre {
   left: 10px;
 }
 
+.matrixInput {
+  display: block;
+  height: 100%;
+  width: 40%;
+  right: 0;
+  position: absolute;
+}
+.matrixInput textarea{
+  border: none;
+  background-color: transparent;
+  color: red;
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+  outline: none;
+}
+.matrixInput textarea.valid {
+  color: white;
+}
+.matrix table {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  table-layout: fixed;
+}
+.matrix table td {
+  width: 33.33%;
+}
+.matrix table td input {
+  pointer-events: all;
+  width: 80%;
+}
