@@ -10,4 +10,6 @@ View the live demo: [ndawe.github.io/markov](https://ndawe.github.io/markov)
 
 ![](demo.png)
 
+Disclaimer: I don't actually satisfy the Markov property.
+
 Visualization code written by [Setosa.io](http://setosa.io)
