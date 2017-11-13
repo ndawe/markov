@@ -75,7 +75,7 @@ myApp.directive('stDiagram', function($compile) {
     var currentStateG = centerG.append('g').attr('class', 'currentState')
       .attr('transform', 'translate(' + [w / 2, h / 2] + ')')
       .style('opacity', 0);
-    var r = 70;
+    var r = 75;
     var linkElements = {};
     var force = d3.layout.force()
       .linkDistance(function(d){ return w / 16 + (1 - d.value) * 200 * w / 900 })
