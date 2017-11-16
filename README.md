@@ -16,6 +16,4 @@ vehicle (must be my smooth pedal stroke ;)).
 
 ![](demo.png)
 
-Disclaimer: I don't actually satisfy the Markov property.
-
 Visualization created by adapting code written by [Setosa.io](http://setosa.io)
